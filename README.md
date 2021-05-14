@@ -15,13 +15,6 @@ You'll need:
 - kivy 1.10.0 and its dependencies
 - pyperclip
 
-### Contribution guidelines ###
-
-* Writing tests
-* Code review
-* Other guidelines
-
 ### Who do I talk to? ###
 
-* Repo owner or admin
-* Other community or team contact
+* Fabio Cammilli <fabio.cammilli@gmail.com>
