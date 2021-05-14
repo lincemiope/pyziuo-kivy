@@ -1,6 +1,6 @@
 # README #
 
-This README would normally document whatever steps are necessary to get your application up and running.
+UO.dll wrapper + Kivy based interface
 
 ### What is this repository for? ###
 
