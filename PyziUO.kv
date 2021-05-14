@@ -1,0 +1,115 @@
+#:kivy 1.10.0
+Root:
+    text_input: text_input
+    tree_view: tree_view
+    tvscroll: tvscroll
+    error_console: error_console
+    btn_play: btn_play
+                
+    BoxLayout: #layout
+        orientation: 'vertical'
+        size_hint: (1, 1)
+        pos: (0, 0)
+        BoxLayout: #menulayout
+            size_hint: (1, 0.08)
+            pos: (0, 0)
+            BoxLayout: #mb
+                Button: #open
+                    text: 'Open'
+                    on_release: root.show_load()
+                Button: #save
+                    text: 'Save'
+                    on_release: root.show_save()
+                Button: #play
+                    id: btn_play
+                    text: 'Play'
+                    on_release: root.playCallBack()
+                Button: #stop
+                    text: 'Stop'
+                    on_release: root.stopCallBack()
+
+        BoxLayout: #bodylayout
+            size_hint: (1, 0.82)            
+            ScrollView: #siscroll
+                pos: (0, 0)
+                size_hint: (0.7, 1)
+                TextInput:
+                    id: text_input
+                    text: ''
+                    size_hint: (1, 5)
+                    background_color: [0.1, 0.1, 0.1, 1]
+                    foreground_color: [.9,.9,.9,1]
+            
+            ScrollView: #tvscroll
+                id: tvscroll
+                pos: (0, 0)
+                size_hint: (0.3, 1)
+                TreeView: #tv
+                    id: tree_view
+                    hide_root: True
+                    indent_level: 2
+                    size_hint: (1, 5)
+
+        BoxLayout: #consolelayout
+            size_hint: (1, .1)
+            ScrollView:
+                #pos: (0, 0)
+                #size_hint: (1, 1)
+                ConsoleLabel:
+                    text: 'Error Console'
+                    id: error_console
+                    bcolor: .2, .2, .2, .8
+                    canvas.before:
+                        Color:
+                            rgba: self.bcolor
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+
+<LoadDialog>:
+    BoxLayout:
+        size: root.size
+        pos: root.pos
+        orientation: "vertical"
+        FileChooserListView:
+            id: filechooser
+            rootpath: root.default_path
+
+        BoxLayout:
+            size_hint_y: None
+            height: 30
+            Button:
+                text: "Cancel"
+                on_release: root.cancel()
+
+            Button:
+                text: "Load"
+                on_release: root.load(filechooser.path, filechooser.selection)
+
+<SaveDialog>:
+    text_input: text_input
+    BoxLayout:
+        size: root.size
+        pos: root.pos
+        orientation: "vertical"
+        FileChooserListView:
+            id: filechooser
+            rootpath: root.default_path
+            on_selection: text_input.text = self.selection and self.selection[0] or ''
+
+        TextInput:
+            id: text_input
+            size_hint_y: None
+            height: 30
+            multiline: False
+
+        BoxLayout:
+            size_hint_y: None
+            height: 30
+            Button:
+                text: "Cancel"
+                on_release: root.cancel()
+
+            Button:
+                text: "Save"
+                on_release: root.save(filechooser.path, text_input.text)
